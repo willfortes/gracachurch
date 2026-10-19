@@ -1,0 +1,29 @@
+{
+  "id": "/",
+  "name": "Graça Church Palhoça",
+  "short_name": "Graça Church",
+  "description": "Programação, grupos de convívio e avisos da Graça Church em Palhoça (SC).",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "/?origem=app",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#0E091A",
+  "theme_color": "#0E091A",
+  "categories": ["lifestyle", "social"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Programação", "short_name": "Agenda", "url": "/programacao?origem=app", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Grupos de convívio", "short_name": "Grupos", "url": "/grupos?origem=app", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Como chegar", "short_name": "Chegar", "url": "/como-chegar?origem=app", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+  ],
+  "screenshots": [
+    { "src": "/img/og.jpg", "sizes": "1200x630", "type": "image/jpeg", "form_factor": "wide", "label": "Graça Church Palhoça" }
+  ]
+}

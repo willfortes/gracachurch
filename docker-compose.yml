@@ -1,0 +1,50 @@
+# Ambiente local: http://localhost:8080 (site) e http://localhost:8080/admin (painel)
+# Primeiro uso:  cp .env.example .env  &&  docker compose up -d --build
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    ports:
+      - "8080:80"
+    env_file: .env
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Roda as migrações e depois o agendador a cada minuto (lembretes e envio dos avisos push)
+  cron:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    env_file: .env
+    volumes:
+      - .:/var/www/html
+    command: ["sh", "-c", "php bin/migrate.php && while true; do php bin/cron.php; sleep 60; done"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      TZ: America/Sao_Paulo
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-p${DB_ROOT_PASS}"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  dbdata:
